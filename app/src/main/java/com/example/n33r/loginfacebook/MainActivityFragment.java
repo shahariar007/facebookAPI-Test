@@ -79,8 +79,9 @@ public class MainActivityFragment extends Fragment {
             GraphRequest graphRequest = new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/friends", null, HttpMethod.GET, new GraphRequest.Callback() {
                 @Override
                 public void onCompleted(GraphResponse graphResponse) {
-                    JSONObject job1 =graphResponse.getJSONObject();
+                    JSONObject job1 = null;
                     try {
+                        job1 = new JSONObject(graphResponse.getRawResponse());
                         JSONArray arr1 = job1.getJSONArray("data");
                         JSONObject ob2 = arr1.getJSONObject(0);
                         String name = ob2.getString("name").toString();
@@ -153,8 +154,6 @@ public class MainActivityFragment extends Fragment {
         if (profile != null) {
             Log.d("profile", "done");
             stringBuffer.append("Welcome " + profile.getName());
-            Log.d("try", "" + profile.getProfilePictureUri(10, 20));
-
 
         }
         return stringBuffer.toString();
